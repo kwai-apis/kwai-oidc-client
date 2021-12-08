@@ -10,7 +10,7 @@
         <version>2.5.5</version>
     </parent>
 
-    <groupId>com.kwai.open.api</groupId>
+    <groupId>com.github.kwaiapis</groupId>
     <artifactId>kwai-oidc-client</artifactId>
     <version>1.0.0</version>
 
