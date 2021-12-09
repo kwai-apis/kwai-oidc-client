@@ -1,4 +1,4 @@
-package com.kwai.open.api.auth.openidconnect;
+package io.github.kwaiapis.auth.openidconnect;
 
 import java.util.Collection;
 

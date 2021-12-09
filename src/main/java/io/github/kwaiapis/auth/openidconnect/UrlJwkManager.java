@@ -1,4 +1,4 @@
-package com.kwai.open.api.auth.openidconnect;
+package io.github.kwaiapis.auth.openidconnect;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ public class UrlJwkManager {
 
     private static final long REFRESH_SKEW_MILLIS = 24 * 3600 * 1000;
 
-    private static final String DEFAULT_PUBLIC_CERTS_ENCODED_URL = "https://www.kwai-pro.com/openapi/certs";
+    private static final String DEFAULT_PUBLIC_CERTS_ENCODED_URL = "https://app.kwai.com/openapi/certs";
 
     private final URL url;
 
