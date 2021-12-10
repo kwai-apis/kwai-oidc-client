@@ -15,8 +15,8 @@ import com.nimbusds.jwt.SignedJWT;
 
 
 /**
- * @author yaolei03 <yaolei03@kuaishou.com>
- * Created on 2021-12-01
+ * @author yaolei03
+ * @since 2021-12-01
  */
 public class IdTokenVerifier {
 

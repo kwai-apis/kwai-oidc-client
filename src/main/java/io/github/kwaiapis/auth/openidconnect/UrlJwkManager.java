@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.nimbusds.jose.jwk.RSAKey;
 
 /**
- * @author yaolei03 <yaolei03@kuaishou.com>
- * Created on 2021-12-01
+ * @author yaolei03
+ * @since 2021-12-01
  */
 public class UrlJwkManager {
 
@@ -80,6 +80,7 @@ public class UrlJwkManager {
 
     /**
      * Forces a refresh of the public certificates downloaded from {@link #url}.
+     * @return {@link UrlJwkManager}
      */
     public UrlJwkManager refresh() {
         lock.lock();
