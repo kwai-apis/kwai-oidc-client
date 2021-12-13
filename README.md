@@ -8,7 +8,7 @@ Public interfaces or tools for Kwai OpenId Connect APIs.
 <dependency>
   <groupId>io.github.kwai-apis</groupId>
   <artifactId>kwai-oidc-client</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
