@@ -37,7 +37,7 @@ public class IdTokenVerifier {
     private final Collection<String> audience;
 
     protected IdTokenVerifier(IdTokenVerifier.Builder builder) {
-        this.urlJwkManager = builder.publicKeys;
+        this.urlJwkManager = builder.urlJwkManager;
         this.acceptableTimeSkewSeconds = builder.acceptableTimeSkewSeconds;
         this.issuer = builder.issuer;
         this.audience = builder.audience;
@@ -95,7 +95,7 @@ public class IdTokenVerifier {
     }
 
     public static class Builder {
-        UrlJwkManager publicKeys;
+        UrlJwkManager urlJwkManager;
 
         long acceptableTimeSkewSeconds = DEFAULT_TIME_SKEW_SECONDS;
 
@@ -103,8 +103,8 @@ public class IdTokenVerifier {
 
         Collection<String> audience;
 
-        public Builder(UrlJwkManager publicKeys) {
-            this.publicKeys = Preconditions.checkNotNull(publicKeys);
+        public Builder(UrlJwkManager urlJwkManager) {
+            this.urlJwkManager = Preconditions.checkNotNull(urlJwkManager);
             setIssuer("https://www.kwai-pro.com");
         }
 
