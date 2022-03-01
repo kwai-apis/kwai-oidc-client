@@ -59,11 +59,11 @@ public class UrlJwkManager {
     private long expirationTimeMilliseconds;
 
     public UrlJwkManager() throws MalformedURLException {
-        this(new URL(DEFAULT_PUBLIC_CERTS_ENCODED_URL), 100, 500, null, null);
+        this(new URL(DEFAULT_PUBLIC_CERTS_ENCODED_URL), 200, 500, null, null);
     }
 
     public UrlJwkManager(String url) throws MalformedURLException {
-        this(new URL(url), 100, 500, null, null);
+        this(new URL(url), 200, 500, null, null);
     }
 
     public UrlJwkManager(URL url, Integer connectTimeout, Integer readTimeout, Proxy proxy,
@@ -107,8 +107,6 @@ public class UrlJwkManager {
 
     /**
      * Forces a refresh of the public certificates downloaded from {@link #url}.
-     *
-     * @return {@link UrlJwkManager}
      */
     public void refresh() {
         lock.lock();

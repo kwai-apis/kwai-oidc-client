@@ -2,6 +2,7 @@ package io.github.kwaiapis.auth.openidconnect;
 
 import java.util.Collections;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,8 +13,7 @@ public class IdTokenTest {
 
     @Test
     public void test1() throws Exception {
-        String url = "http://localhost:8080/openapi/certs";
-        IdTokenVerifier verifier = new IdTokenVerifier.Builder(new UrlJwkManager(url))
+        IdTokenVerifier verifier = new IdTokenVerifier.Builder(new UrlJwkManager())
                 .setAudience(Collections.singleton("clientId"))
                 .build();
 
@@ -27,6 +27,6 @@ public class IdTokenTest {
                         + "nOXTi8O1E_IWIsNw_5KENfTwomOj16vXXrdoI6JZSwQR-46-pRAYcajb05CfKe7klqG7iY8UhDJtRV1vkBtKuwtTd3k"
                         + "6S_H6-_HHCUj1vFH9px_mcpiVwWwpVANoTo3Fxj5FYA1qIvF4t17WEl5BuF1CdvcaVgnx_hw";
         IdToken idToken = verifier.verify(idTokenString);
-        System.out.println(idToken != null);
+        Assertions.assertTrue(idToken != null);
     }
 }
