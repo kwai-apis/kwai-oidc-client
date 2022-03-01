@@ -1,6 +1,7 @@
 # kwai-apis
 
 Public interfaces or tools for Kwai OpenId Connect APIs.
+Security Check Passed. (auditor: linjiajun@kuaishou.com, developer: yaolei03@kuaishou.com)
 
 * maven dependency
 
