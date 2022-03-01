@@ -12,11 +12,10 @@
 
     <groupId>io.github.kwai-apis</groupId>
     <artifactId>kwai-oidc-client</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <guava.version>30.1-jre</guava.version>
     </properties>
 

@@ -11,11 +11,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.google.common.base.Stopwatch;
 import com.nimbusds.jose.jwk.RSAKey;
 
 /**
@@ -24,7 +30,13 @@ import com.nimbusds.jose.jwk.RSAKey;
  */
 public class UrlJwkManager {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UrlJwkManager.class);
+
+    private static final long ONE_HOUR_MILLIS = 3600 * 1000;
+
     private static final long REFRESH_SKEW_MILLIS = 24 * 3600 * 1000;
+
+    private static final AtomicInteger COUNT = new AtomicInteger(0);
 
     private static final String DEFAULT_PUBLIC_CERTS_ENCODED_URL = "https://app.kwai.com/openapi/certs";
 
@@ -63,37 +75,52 @@ public class UrlJwkManager {
         this.headers = (headers == null) ?
                        Collections.singletonMap("Accept", "application/json") : headers;
         this.reader = new ObjectMapper().readerFor(Map.class);
+
+        refresh();
+        Thread t = new Thread(() -> {
+            while (true) {
+                if (Thread.interrupted()) {
+                    break;
+                }
+                try {
+                    Thread.sleep(ONE_HOUR_MILLIS);
+                    refresh();
+                } catch (Throwable e) {
+                    LOG.error("refresh jwk fail.", e);
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.setName("task-refresh-jwk-" + COUNT.getAndIncrement());
+        t.start();
+        LOG.info("create url jwk manager {} success.", url);
     }
 
     public final RSAKey getPublicKey(String kid) {
-        lock.lock();
-        try {
-            if (publicKeyMap == null || System.currentTimeMillis() > expirationTimeMilliseconds) {
-                refresh();
-            }
-            return publicKeyMap.get(kid);
-        } finally {
-            lock.unlock();
+        if (publicKeyMap == null || System.currentTimeMillis() > expirationTimeMilliseconds) {
+            // should never happen
+            refresh();
         }
+        return publicKeyMap.get(kid);
     }
 
 
     /**
      * Forces a refresh of the public certificates downloaded from {@link #url}.
+     *
      * @return {@link UrlJwkManager}
      */
-    public UrlJwkManager refresh() {
+    public void refresh() {
         lock.lock();
         try {
             loadAll();
-            return this;
         } finally {
             lock.unlock();
         }
     }
 
-
-    public void loadAll() {
+    private void loadAll() {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Map<String, RSAKey> map = new HashMap<>();
         final List<Map<String, Object>> keys = (List<Map<String, Object>>) getJwks().get("keys");
 
@@ -111,6 +138,7 @@ public class UrlJwkManager {
         }
         publicKeyMap = Collections.unmodifiableMap(map);
         expirationTimeMilliseconds = System.currentTimeMillis() + REFRESH_SKEW_MILLIS;
+        LOG.info("jwk manager load {} public keys success. {}", url, stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     private Map<String, Object> getJwks() {

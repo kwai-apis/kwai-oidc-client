@@ -105,7 +105,7 @@ public class IdTokenVerifier {
 
         public Builder(UrlJwkManager urlJwkManager) {
             this.urlJwkManager = Preconditions.checkNotNull(urlJwkManager);
-            setIssuer("https://www.kwai-pro.com");
+            setIssuer("https://www.kwai.com");
         }
 
         public Builder setAcceptableTimeSkewSeconds(long acceptableTimeSkewSeconds) {
