@@ -4,16 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--<parent>
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>2.5.5</version>
-    </parent>-->
+    </parent>
 
     <groupId>io.github.kwai-apis</groupId>
     <artifactId>kwai-oidc-client</artifactId>
     <version>1.0.3</version>
     <packaging>jar</packaging>
+    <name>kwai-oidc-client</name>
+    <description>Kwai Oidc Client</description>
+    <url>https://github.com/kwai-apis/</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>yaolei03</name>
+            <email>yaolei03@kuaishou.com</email>
+            <organization>Kwai</organization>
+            <organizationUrl>https://www.kwai.com/</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/kwai-apis/</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
